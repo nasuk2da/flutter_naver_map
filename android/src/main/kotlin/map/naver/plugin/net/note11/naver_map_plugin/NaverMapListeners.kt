@@ -9,6 +9,7 @@ import com.naver.maps.map.NaverMap.OnCameraChangeListener
 import com.naver.maps.map.NaverMap.OnCameraIdleListener
 import com.naver.maps.map.NaverMap.OnMapLongClickListener
 import com.naver.maps.map.NaverMap.OnMapDoubleTapListener
+import com.naver.maps.map.NaverMap.OnLocationChangeListener
 import com.naver.maps.map.NaverMap.OnMapTwoFingerTapListener
 import android.graphics.PointF
 import com.naver.maps.geometry.LatLng
@@ -21,6 +22,7 @@ import map.naver.plugin.net.note11.naver_map_plugin.NaverPathsController.PathCon
 import map.naver.plugin.net.note11.naver_map_plugin.NaverCircleController.CircleController
 import map.naver.plugin.net.note11.naver_map_plugin.NaverPolygonController.PolygonController
 import java.util.HashMap
+import android.location.Location
 
 class NaverMapListeners( // member variable
     private val channel: MethodChannel,
@@ -33,6 +35,7 @@ class NaverMapListeners( // member variable
     OnMapLongClickListener,
     OnMapDoubleTapListener,
     OnMapTwoFingerTapListener,
+    OnLocationChangeListener,
     Overlay.OnClickListener {
 
     override fun onMapClick(pointF: PointF, latLng: LatLng) {
@@ -86,6 +89,13 @@ class NaverMapListeners( // member variable
 
     override fun onCameraIdle() {
         channel.invokeMethod("camera#idle", null)
+    }
+
+    override fun onLocationChange(location: Location) {
+        val arguments: MutableMap<String, Any> = HashMap(2)
+        arguments["lat"] = location.getLatitude();
+        arguments["lng"] = location.getLongitude();
+        channel.invokeMethod("map#location", arguments)
     }
 
     override fun onClick(overlay: Overlay): Boolean {

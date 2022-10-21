@@ -11,6 +11,7 @@ class NaverMap extends StatefulWidget {
     this.onMapDoubleTap,
     this.onMapTwoFingerTap,
     this.onSymbolTap,
+    this.onLocationChange,
     this.onCameraChange,
     this.onCameraIdle,
     this.pathOverlays,
@@ -57,6 +58,10 @@ class NaverMap extends StatefulWidget {
 
   /// 카메라가 움직일때 호출되는 콜백
   final OnCameraChange? onCameraChange;
+
+  /// 위치가 변경될때 호출되는 콜백함수.
+  /// 사용자의 위치를 [LatLng]을 파라미터로 가진다.
+  final OnLocationChange? onLocationChange;
 
   /// 카메라의 움직임이 완료되었을때 호출되는 콜백
   final VoidCallback? onCameraIdle;
@@ -454,6 +459,11 @@ class _NaverMapState extends State<NaverMap> {
       LatLng? position, CameraChangeReason reason, bool? isAnimated) {
     if (widget.onCameraChange != null)
       widget.onCameraChange!(position, reason, isAnimated);
+  }
+
+  void _locationChange(LatLng? position) {
+    if (widget.onLocationChange != null && position != null)
+      widget.onLocationChange!(position!);
   }
 
   void _cameraIdle() {

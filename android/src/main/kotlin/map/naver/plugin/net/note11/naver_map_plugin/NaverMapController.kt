@@ -94,6 +94,7 @@ class NaverMapController(
             onSymbolClickListener = listeners
             addOnCameraChangeListener(listeners)
             addOnCameraIdleListener(listeners)
+            addOnLocationChangeListener(listeners)
             locationSource = FusedLocationSource(activity, 0xAAFF)
         }
 
