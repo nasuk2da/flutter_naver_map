@@ -11,6 +11,9 @@ import com.naver.maps.map.NaverMap.OnMapLongClickListener
 import com.naver.maps.map.NaverMap.OnMapDoubleTapListener
 import com.naver.maps.map.NaverMap.OnLocationChangeListener
 import com.naver.maps.map.NaverMap.OnMapTwoFingerTapListener
+import com.naver.maps.map.NaverMap.OnOptionChangeListener
+import com.naver.maps.map.util.FusedLocationSource
+import com.naver.maps.map.LocationTrackingMode
 import android.graphics.PointF
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
@@ -36,6 +39,7 @@ class NaverMapListeners( // member variable
     OnMapDoubleTapListener,
     OnMapTwoFingerTapListener,
     OnLocationChangeListener,
+    OnOptionChangeListener,
     Overlay.OnClickListener {
 
     override fun onMapClick(pointF: PointF, latLng: LatLng) {
@@ -133,4 +137,11 @@ class NaverMapListeners( // member variable
         }
         return false
     }
+
+    override fun onOptionChange() {
+        val fusedLocationSource: FusedLocationSource = naverMap.locationSource as FusedLocationSource
+        val mode: Boolean = naverMap.locationTrackingMode == LocationTrackingMode.Follow || naverMap.locationTrackingMode == LocationTrackingMode.Face
+        fusedLocationSource.isCompassEnabled = mode
+    }
+
 }

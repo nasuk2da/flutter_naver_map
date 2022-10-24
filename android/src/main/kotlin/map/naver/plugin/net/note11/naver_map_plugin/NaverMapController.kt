@@ -95,6 +95,7 @@ class NaverMapController(
             addOnCameraChangeListener(listeners)
             addOnCameraIdleListener(listeners)
             addOnLocationChangeListener(listeners)
+            addOnOptionChangeListener(listeners)
             locationSource = FusedLocationSource(activity, 0xAAFF)
         }
 
