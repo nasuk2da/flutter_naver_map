@@ -31,7 +31,7 @@ protocol NaverMapOptionSink {
 }
 
 
-class NaverMapController: NSObject, FlutterPlatformView, NaverMapOptionSink, NMFMapViewTouchDelegate, NMFMapViewCameraDelegate, NMFAuthManagerDelegate {
+class NaverMapController: NSObject, FlutterPlatformView, NaverMapOptionSink, NMFMapViewTouchDelegate, NMFMapViewCameraDelegate, NMFAuthManagerDelegate, CLLocationManagerDelegate {
     
     var mapView : NMFMapView?
     var naverMap : NMFNaverMapView?
@@ -44,6 +44,9 @@ class NaverMapController: NSObject, FlutterPlatformView, NaverMapOptionSink, NMF
     
     var channel : FlutterMethodChannel?
     var registrar : FlutterPluginRegistrar?
+    
+    var locationManager = CLLocationManager()
+
     
     init(viewId: Int64, frame: CGRect, registrar: FlutterPluginRegistrar, argument: NSDictionary?) {
         self.viewId = viewId
@@ -101,6 +104,25 @@ class NaverMapController: NSObject, FlutterPlatformView, NaverMapOptionSink, NMF
         // 제대로 동작하지 않는 컨트롤러 UI로 원인이 밝혀지기 전까진 강제 비활성화.
         naverMap!.showZoomControls = false
         naverMap!.showIndoorLevelPicker = false
+        
+        // 현재 위치정보 가져오기
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            print("위치 서비스 On 상태")
+            locationManager.startUpdatingLocation()
+        } else {
+            print("위치 서비스 Off 상태")
+        }
+
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if(locations.count > 0) {
+            self.channel?.invokeMethod("map#location", arguments: ["lat" : locations.first!.coordinate.latitude , "lng" : locations.first!.coordinate.longitude])
+        }
     }
     
     func view() -> UIView {
