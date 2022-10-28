@@ -45,7 +45,7 @@ class NaverMapController: NSObject, FlutterPlatformView, NaverMapOptionSink, NMF
     var channel : FlutterMethodChannel?
     var registrar : FlutterPluginRegistrar?
     
-    var locationManager = CLLocationManager()
+    var locationManager = CLLocationManager() 
 
     
     init(viewId: Int64, frame: CGRect, registrar: FlutterPluginRegistrar, argument: NSDictionary?) {
