@@ -99,6 +99,7 @@ class NaverMapListeners( // member variable
         val arguments: MutableMap<String, Any> = HashMap(2)
         arguments["lat"] = location.getLatitude();
         arguments["lng"] = location.getLongitude();
+        arguments["accuracy"] = location.getAccuracy();
         channel.invokeMethod("map#location", arguments)
     }
 

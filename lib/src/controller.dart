@@ -83,7 +83,7 @@ class NaverMapController {
         _naverMapState._cameraMove(position, reason, isAnimated);
         break;
       case 'map#location':
-        LatLng? position = LatLng(call.arguments['lat'], call.arguments['lng']);
+        LatLng? position = LatLng(call.arguments['lat'], call.arguments['lng'], accuracy: call.arguments['accuracy']);
         _naverMapState._locationChange(position);
         break;
       case 'camera#idle':
