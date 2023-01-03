@@ -110,6 +110,7 @@ class NaverMapController: NSObject, FlutterPlatformView, NaverMapOptionSink, NMF
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         
+        
         if CLLocationManager.locationServicesEnabled() {
             print("위치 서비스 On 상태")
             locationManager.startUpdatingLocation()
@@ -121,7 +122,7 @@ class NaverMapController: NSObject, FlutterPlatformView, NaverMapOptionSink, NMF
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if(locations.count > 0) {
-            self.channel?.invokeMethod("map#location", arguments: ["lat" : locations.first!.coordinate.latitude , "lng" : locations.first!.coordinate.longitude])
+            self.channel?.invokeMethod("map#location", arguments: ["lat" : locations.first!.coordinate.latitude , "lng" : locations.first!.coordinate.longitude, "accuracy" : locations.first!.horizontalAccuracy])
         }
     }
     
