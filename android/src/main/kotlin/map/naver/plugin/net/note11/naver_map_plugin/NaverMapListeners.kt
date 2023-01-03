@@ -142,11 +142,6 @@ class NaverMapListeners( // member variable
 
     override fun onOptionChange() {
         val fusedLocationSource: FusedLocationSource = naverMap.locationSource as FusedLocationSource
-
-        // 산책중에 트래킹 사라지는문제 수정
-        if(naverMap.locationTrackingMode == LocationTrackingMode.None) {
-            naverMap.locationTrackingMode = LocationTrackingMode.Follow
-        }
         val mode: Boolean = naverMap.locationTrackingMode == LocationTrackingMode.Follow || naverMap.locationTrackingMode == LocationTrackingMode.Face
         fusedLocationSource.isCompassEnabled = mode
     }
