@@ -122,7 +122,14 @@ class NaverMapController: NSObject, FlutterPlatformView, NaverMapOptionSink, NMF
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if(locations.count > 0) {
-            self.channel?.invokeMethod("map#location", arguments: ["lat" : locations.first!.coordinate.latitude , "lng" : locations.first!.coordinate.longitude, "accuracy" : locations.first!.horizontalAccuracy])
+            self.channel?.invokeMethod("map#location",
+                arguments: [
+                "lat" : locations.first!.coordinate.latitude,
+                "lng" : locations.first!.coordinate.longitude,
+                "accuracy" : locations.first!.horizontalAccuracy,
+                "timeStamp" : locations.first!.timestamp,
+                ]
+            )
         }
     }
     

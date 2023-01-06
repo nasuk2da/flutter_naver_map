@@ -101,6 +101,7 @@ class NaverMapListeners( // member variable
         arguments["lat"] = location.getLatitude();
         arguments["lng"] = location.getLongitude();
         arguments["accuracy"] = location.getAccuracy();
+        arguments["timeStamp"] = location.getTime();
         channel.invokeMethod("map#location", arguments)
     }
 

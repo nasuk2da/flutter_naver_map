@@ -2,15 +2,17 @@ part of flutter_naver_map;
 
 /// 위도와 경도가 한 쌍을 이루어서 저장되는 class.
 class LatLng {
-  const LatLng(double latitude, double longitude, {double accuracy = 0})
+  const LatLng(double latitude, double longitude, {double accuracy = 0, int timeStamp = 0})
       : latitude =
             (latitude < -90.0 ? -90.0 : (90.0 < latitude ? 90.0 : latitude)),
         longitude = (longitude + 180.0) % 360.0 - 180.0,
-        accuracy = accuracy;
+        accuracy = accuracy,
+        timeStamp = timeStamp;
 
   final double latitude;
   final double longitude;
   final double accuracy;
+  final int timeStamp;
 
   List<double> get json => [latitude, longitude];
 
