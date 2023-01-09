@@ -127,7 +127,7 @@ class NaverMapController: NSObject, FlutterPlatformView, NaverMapOptionSink, NMF
                 "lat" : locations.first!.coordinate.latitude,
                 "lng" : locations.first!.coordinate.longitude,
                 "accuracy" : locations.first!.horizontalAccuracy,
-                "timeStamp" : locations.first!.timestamp,
+                "timeStamp" : locations.first!.timestamp.timeIntervalSince1970*1000,
                 ]
             )
         }
